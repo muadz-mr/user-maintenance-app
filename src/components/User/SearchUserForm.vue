@@ -13,9 +13,15 @@ const emit = defineEmits(["search"]);
 const formModel = ref({
   name: "",
 });
+
 const search = () => {
   const payload = structuredClone(formModel.value);
   emit("search", payload);
+};
+
+const reset = () => {
+  formModel.value.name = "";
+  emit("search", {});
 };
 </script>
 
@@ -38,9 +44,20 @@ const search = () => {
           <v-btn
             type="submit"
             color="teal"
+            prepend-icon="mdi-magnify"
             :loading="loading"
             :disabled="loading"
             >Search</v-btn
+          >
+          <v-btn
+            variant="outlined"
+            color="teal"
+            prepend-icon="mdi-close"
+            :loading="loading"
+            :disabled="loading"
+            @click.stop="reset"
+            class="ml-2"
+            >Reset</v-btn
           >
         </div>
       </form>
